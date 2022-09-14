@@ -6,50 +6,50 @@ import "@openzeppelin/contracts-upgradeable/utils/cryptography/draft-EIP712Upgra
 
 contract Structure is EIP712Upgradeable {
     struct UpgradeOrder {
-        bytes32 orderSn; // 订单编号
+        bytes32 orderSn; // 
         uint256 tokenId; // tokenId
-        address userAddress; // 发起该订单的用户地址
-        uint256 targetLevel; // 目标等级
-        uint256 coinAmount; // 消耗的MWT数量
-        uint256 upgradeCardAmount; // 消耗的升级卡数量
-        uint256 createTime; // 创建的时间
-        uint256 deadline; // 过期时间
-        bytes userSign; // 用户签名
+        address userAddress; // 
+        uint256 targetLevel; // 
+        uint256 coinAmount; // 
+        uint256 upgradeCardAmount; // 
+        uint256 createTime; // 
+        uint256 deadline; // 
+        bytes userSign; // 
     }
 
     struct AssetsOrder {
-        bytes32 orderSn; // 订单编号
-        uint256 orderType; // 0 充值 1 提取
-        address userAddress; // 用户地址
-        uint256 coinAmount; // MWT数量
-        uint256 overtimeCard; // 加时卡
-        uint256 timeReductionCard; // 减时卡
-        uint256 debugCard; // 排错卡
-        uint256 robocards; // 抢答卡
-        uint256 resurrectionCard; // 复活卡
-        uint256 upgradeCard; // 升级卡
-        uint256 createTime; // 创建的时间
-        uint256 deadline; // 过期时间
-        bytes userSign; // 用户签名
+        bytes32 orderSn; // 
+        uint256 orderType; // 
+        address userAddress; // 
+        uint256 coinAmount; // 
+        uint256 overtimeCard; // 
+        uint256 timeReductionCard; // 
+        uint256 debugCard; // 
+        uint256 robocards; // 
+        uint256 resurrectionCard; // 
+        uint256 upgradeCard; // 
+        uint256 createTime; // 
+        uint256 deadline; // 
+        bytes userSign; // 
     }
 
     struct CultivateOrder {
-        bytes32 orderSn; // 订单编号
-        address userAddress; // 用户地址
+        bytes32 orderSn; // 
+        address userAddress; // 
         uint256 tokenId0; // token0Id
         uint256 tokenId1; // token1Id
-        uint256 rarity0; // token0稀有度 N R SR SSR : 0 1 2 3
-        uint256 rarity1; // token1稀有度
-        uint256 createTime; // 创建的时间
-        uint256 deadline; // 过期时间
-        bytes userSign; // 用户签名
+        uint256 rarity0; // token0 N R SR SSR : 0 1 2 3
+        uint256 rarity1; // token1
+        uint256 createTime; // 
+        uint256 deadline; // 
+        bytes userSign; // 
     }
 
     struct WithdrawOrder {
-        address userAddress; // 用户地址
+        address userAddress; // 
         uint256 tokenId; // tokenId
-        uint256 createTime; // 创建时间
-        uint256 deadline; // 过期时间
+        uint256 createTime; // 
+        uint256 deadline; // 
     }
 
     bytes32 public constant USER_LEVEL_TYPEHASH =
