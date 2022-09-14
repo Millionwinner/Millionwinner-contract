@@ -8,16 +8,16 @@ import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 contract MillionwinnerToken is ERC20, Pausable, AccessControlEnumerable {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    address public team; // 团队地址
-    address public eldf; // 生态基金地址
-    uint256 public teamReleaseTime; //团队开始释放的时间
-    uint256 public eldfReleaseTime; // 生态基金开始释放的时间
-    uint256 public teamReleaseCount; // 团队解锁的次数
-    uint256 public eldfReleaseCount; // 生态基金解锁的次数
-    uint256 public teamReleaseAmount = 4166666 * 1e18; // 团队每次解锁的金额   总量为1亿五千万 分36期
-    uint256 public eldfReleaseAmount = 3888888 * 1e18; // 生态基金每次解锁的金额  总量为1亿五千万 分36期(代币部署提前解锁1%,14%分36期)
-    uint256 public releasePeriods = 30 days; // 每次解锁的周期
-    uint256 public cap = 1000000000 * 1e18; // 代币的上限 10亿
+    address public team; // 
+    address public eldf; // 
+    uint256 public teamReleaseTime; //
+    uint256 public eldfReleaseTime; // 
+    uint256 public teamReleaseCount; // 
+    uint256 public eldfReleaseCount; // 
+    uint256 public teamReleaseAmount = 4166666 * 1e18; // 
+    uint256 public eldfReleaseAmount = 3888888 * 1e18; // 
+    uint256 public releasePeriods = 30 days; // 
+    uint256 public cap = 1000000000 * 1e18; // 
 
     event TransferAdminRole(address oldAdmin, address newAdmin);
 
@@ -32,11 +32,11 @@ contract MillionwinnerToken is ERC20, Pausable, AccessControlEnumerable {
         _setupRole(MINTER_ROLE, _msgSender());
         team = _team;
         eldf = _eldf;
-        // 团队的代币在代币上线后 6个月开始释放
+        // 
         teamReleaseTime = block.timestamp + 180 days;
-        // 生态基金的代币在代币上线后 立即释放总量的1% 剩余的14% 三个月后开始释放
+        // 
         eldfReleaseTime = block.timestamp + 90 days;
-        // 团队 + 生态 = 3亿
+        // 
         _mint(address(this), 290000000 * 1e18);
         _mint(eldf, 10000000 * 1e18);
     }
@@ -74,16 +74,16 @@ contract MillionwinnerToken is ERC20, Pausable, AccessControlEnumerable {
         _unpause();
     }
 
-    // 团队解锁
+    // 
     function getTeamLockAmount() external {
         require(msg.sender == team, "Millionwinner Token: forbidden to call");
         require(block.timestamp >= teamReleaseTime, "Millionwinner Token: Unlock time");
-        // 在解锁期到了之后立即开始解锁 所以加了一次解锁周期
+        // 
         uint256 number = (block.timestamp - teamReleaseTime + releasePeriods) / releasePeriods;
         number = number > 36 ? 36 : number;
         require(number > teamReleaseCount, "Millionwinner Token: release amount has been collected");
         uint256 available = number - teamReleaseCount;
-        // 如果是最后一期了,可以将剩余的一起结算 150000000 - 4166666 * 36 = 24
+        // 
         if (number == 36) {
             uint256 over = 150000000 * 1e18 - (teamReleaseAmount * 36);
             transfer(team, teamReleaseAmount * available + over);
@@ -93,7 +93,7 @@ contract MillionwinnerToken is ERC20, Pausable, AccessControlEnumerable {
         teamReleaseCount += available;
     }
 
-    // 生态基金解锁
+    // 
     function getEldfLockAmount() external {
         require(msg.sender == eldf, "Millionwinner Token: forbidden to call");
         require(block.timestamp >= eldfReleaseTime, "Millionwinner Token: Unlock time");
@@ -101,7 +101,7 @@ contract MillionwinnerToken is ERC20, Pausable, AccessControlEnumerable {
         number = number > 36 ? 36 : number;
         require(number > eldfReleaseCount, "Millionwinner Token: release amount has been collected");
         uint256 available = number - eldfReleaseCount;
-        // 如果是最后一期了,可以将剩余的一起结算 140000000 - 3888888 * 36 = 32
+        // 
         if (number == 36) {
             uint256 over = 140000000 * 1e18 - (eldfReleaseAmount * 36);
             transfer(eldf, eldfReleaseAmount * available + over);
@@ -111,7 +111,7 @@ contract MillionwinnerToken is ERC20, Pausable, AccessControlEnumerable {
         eldfReleaseCount += available;
     }
 
-    // 更改团队收款地址
+    // 
     function setTeamAddress(address _team) external {
         require(
             _team != address(0) && _team != team,
@@ -121,7 +121,7 @@ contract MillionwinnerToken is ERC20, Pausable, AccessControlEnumerable {
         team = _team;
     }
 
-    // 更改生态基金收款地址
+    // 
     function seteldfAddress(address _eldf) external {
         require(
             _eldf != address(0) && _eldf != eldf,
