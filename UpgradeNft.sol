@@ -20,7 +20,7 @@ interface INFT {
 }
 
 interface IPropsCard {
-    //  id1 : 加时卡 id2 : 减时卡 id3 : 排错卡 id4 : 抢答卡 id5 : 复活卡 id6 : 升级卡
+    //  id1 : 
     function mint(
         address to,
         uint256 id,
@@ -51,32 +51,32 @@ interface ICoin {
 contract UpgradeNft is Structure, OwnableUpgradeable, ReentrancyGuardUpgradeable, ERC721HolderUpgradeable {
     using SafeERC20Upgradeable for IERC20Upgradeable;
 
-    address public nftAddress; // nft的地址 盲盒地址也是同样的
-    address public mwt; // mwt地址
-    address public propsCard; // 道具卡  id1 : 加时卡 id2 : 减时卡 id3 : 排错卡 id4 : 抢答卡 id5 : 复活卡 id6 : 升级卡
-    address public signAddress; // 签名地址
-    uint256 public levelCap; // 等级上限
+    address public nftAddress; // 
+    address public mwt; // 
+    address public propsCard; // 
+    address public signAddress; // 
+    uint256 public levelCap; // 
     address public random;
-    mapping(uint256 => uint256) public mwtConsumption; // 升级所需的Mwt消耗
-    mapping(uint256 => uint256) public cardConsumption; // 升级所需的升级卡消耗
-    mapping(uint256 => uint256) public upgradeInterval; // 升级间隔
-    mapping(uint256 => mapping(uint256 => uint256)) public cultivationConsumption; // 培养的消耗
-    mapping(uint256 => mapping(uint256 => uint256)) public cultivationFailureRate; // 培养的失败率
-    mapping(uint256 => address) public belong; // 用户挖矿时,暂时锁定了Token,这里保存了token是属于哪个用户的
-    mapping(address => uint256[]) public userLockInfo; // 用户锁定的所有token
-    mapping(uint256 => TokenInfo) public tokenInfo; // NFT详情
-    mapping(uint256 => uint256) public mysteryBoxRarity; // 盲盒稀有度
-    mapping(uint256 => uint256) public NFTRarity; // NFT稀有度
-    mapping(bytes32 => bool) public orderSn; // 订单编号应该为唯一的
+    mapping(uint256 => uint256) public mwtConsumption; // 
+    mapping(uint256 => uint256) public cardConsumption; // 
+    mapping(uint256 => uint256) public upgradeInterval; // 
+    mapping(uint256 => mapping(uint256 => uint256)) public cultivationConsumption; // 
+    mapping(uint256 => mapping(uint256 => uint256)) public cultivationFailureRate; // 
+    mapping(uint256 => address) public belong; // 
+    mapping(address => uint256[]) public userLockInfo; // 
+    mapping(uint256 => TokenInfo) public tokenInfo; // 
+    mapping(uint256 => uint256) public mysteryBoxRarity; // 
+    mapping(uint256 => uint256) public NFTRarity; // 
+    mapping(bytes32 => bool) public orderSn; // 
 
     // event UpgradeEvent(address indexed user);
     // event WithdrawAssets(bytes32 indexed orderSn, address user);
     // event RechargeAssets(bytes32 indexed orderSn, address user);
 
     struct TokenInfo {
-        uint256 level; //  代币等级
-        uint256 incubationsNumber; // 培养的次数
-        uint256 interval; // 升级间隔
+        uint256 level; //  
+        uint256 incubationsNumber; // 
+        uint256 interval; // 
     }
 
     function __UpgradeNft_init(
@@ -103,37 +103,37 @@ contract UpgradeNft is Structure, OwnableUpgradeable, ReentrancyGuardUpgradeable
         signAddress = _signAddress;
     }
 
-    // 获取用户抵押的所有NFT
+    // 
     function getUserLock(address user) external view returns (uint256[] memory) {
         uint256[] memory lockInfo = userLockInfo[user];
         if (lockInfo.length > 0) return lockInfo;
         return new uint256[](0);
     }
 
-    // 设置管理员签名地址
+    // 
     function setSignAddress(address newSign) external onlyOwner {
         require(newSign != address(0), "Is zero address");
         signAddress = newSign;
     }
 
-    // 设置伪随机数获取合约
+    // 
     function setRandom(address _random) external onlyOwner {
         require(_random != address(0), "Is zero address");
         random = _random;
     }
 
-    // 设置NFT的地址
+    // 
     function setNft(address _nft) external onlyOwner {
         nftAddress = _nft;
     }
 
-    // 设置等级上限
+    // 
     function setLevelCap(uint256 cap) external onlyOwner {
         require(cap > 0, "UpgradeNft: The upper limit cannot be zero");
         levelCap = cap;
     }
 
-    // 设置升级时mwt的消耗
+    // 
     function setMwtConsumption(uint256[] memory _level, uint256[] memory _consumption) external onlyOwner {
         require(_level.length > 0 && _level.length == _consumption.length, "UpgradeNft: length error");
         for (uint256 i = 0; i < _level.length; i++) {
@@ -141,7 +141,7 @@ contract UpgradeNft is Structure, OwnableUpgradeable, ReentrancyGuardUpgradeable
         }
     }
 
-    // 设置升级时升级卡的消耗
+    // 
     function setCardConsumption(uint256[] memory _level, uint256[] memory _consumption) external onlyOwner {
         require(_level.length > 0 && _level.length == _consumption.length, "UpgradeNft: length error");
         for (uint256 i = 0; i < _level.length; i++) {
@@ -149,7 +149,7 @@ contract UpgradeNft is Structure, OwnableUpgradeable, ReentrancyGuardUpgradeable
         }
     }
 
-    // 设置升级间隔
+    // 
     function setUpgradeInterval(uint256[] memory _level, uint256[] memory _interval) external onlyOwner {
         require(_level.length > 0 && _level.length == _interval.length, "UpgradeNft: length error");
         for (uint256 i = 0; i < _level.length; i++) {
@@ -157,11 +157,11 @@ contract UpgradeNft is Structure, OwnableUpgradeable, ReentrancyGuardUpgradeable
         }
     }
 
-    // 设置培养的消耗
+    // 
     function setCultivationConsumption(
-        uint256 _rarity, // 稀有度
-        uint256[] memory _number, // 培养的次数
-        uint256[] memory _consumption // 消耗
+        uint256 _rarity, // 
+        uint256[] memory _number, // 
+        uint256[] memory _consumption // 
     ) external onlyOwner {
         require(_number.length > 0 && _number.length == _consumption.length, "UpgradeNft: length error");
 
@@ -170,7 +170,7 @@ contract UpgradeNft is Structure, OwnableUpgradeable, ReentrancyGuardUpgradeable
         }
     }
 
-    // 设置培养的失败率
+    // 
     function setCultivationFailureRate(
         uint256 _rarity,
         uint256[] memory _number,
@@ -183,7 +183,7 @@ contract UpgradeNft is Structure, OwnableUpgradeable, ReentrancyGuardUpgradeable
         }
     }
 
-    // 升级
+    // 
     function upgradeLevel(UpgradeOrder memory order, bytes memory signature) external {
         require(!orderSn[order.orderSn], "UpgradeNft: order completed");
         require(order.deadline >= block.timestamp, "UpgradeNft: order already expired");
@@ -218,7 +218,7 @@ contract UpgradeNft is Structure, OwnableUpgradeable, ReentrancyGuardUpgradeable
         orderSn[order.orderSn] = true;
     }
 
-    // 提取资产
+    // 
     function withdrawAssets(AssetsOrder memory order, bytes memory signature) external {
         require(!orderSn[order.orderSn], "UpgradeNft: order completed");
         require(order.deadline >= block.timestamp, "UpgradeNft: order already expired");
@@ -266,7 +266,7 @@ contract UpgradeNft is Structure, OwnableUpgradeable, ReentrancyGuardUpgradeable
         orderSn[order.orderSn] = true;
     }
 
-    // 充值
+    // 
     function rechargeAssets(AssetsOrder memory order, bytes memory signature) external {
         require(!orderSn[order.orderSn], "UpgradeNft: order completed");
         require(order.deadline >= block.timestamp, "UpgradeNft: order already expired");
@@ -314,7 +314,7 @@ contract UpgradeNft is Structure, OwnableUpgradeable, ReentrancyGuardUpgradeable
         orderSn[order.orderSn] = true;
     }
 
-    // 繁殖NFT
+    // 
     function cultivationNft(CultivateOrder memory order, bytes memory signature) external returns (uint256, uint256) {
         require(!orderSn[order.orderSn], "UpgradeNft: order completed");
         require(order.deadline >= block.timestamp, "UpgradeNft: order already expired");
@@ -358,17 +358,17 @@ contract UpgradeNft is Structure, OwnableUpgradeable, ReentrancyGuardUpgradeable
         return (tokenId, mRate);
     }
 
-    // 抵押
+    // 
     function deposit(uint256 tid) external {
         require(IERC721Upgradeable(nftAddress).ownerOf(tid) == msg.sender, "UpgradeNft: no token ownership");
         require(belong[tid] == address(0), "UpgradeNft: illegal withdraw");
-        // TODO 确认抵押的是英雄
+        // TODO 
         IERC721Upgradeable(nftAddress).safeTransferFrom(msg.sender, address(this), tid);
         belong[tid] = msg.sender;
         userLockInfo[msg.sender].push(tid);
     }
 
-    // 提取
+    // 
     function withdraw(WithdrawOrder memory order, bytes memory signature) external {
         require(order.deadline >= block.timestamp, "UpgradeNft: order already expired");
         require(msg.sender == order.userAddress, "UpgradeNft: operation denied");
@@ -393,7 +393,7 @@ contract UpgradeNft is Structure, OwnableUpgradeable, ReentrancyGuardUpgradeable
         IERC721Upgradeable(nftAddress).safeTransferFrom(address(this), msg.sender, order.tokenId);
     }
 
-    // 开启盲盒 ,返回tokenid 和 它的稀有度
+    // 
     function openMysteryBox(uint256 tid) external returns (uint256, uint256) {
         require(IERC721Upgradeable(nftAddress).ownerOf(tid) == msg.sender, "UpgradeNft: no token ownership");
         require(INFT(nftAddress).getTokenIdType(tid) == 100, "UpgradeNft: Wrong type of NFT");
@@ -447,7 +447,7 @@ contract UpgradeNft is Structure, OwnableUpgradeable, ReentrancyGuardUpgradeable
         return 9999;
     }
 
-    // 培养的概率
+    // 
     function cultivationPR(uint256 rarity0, uint256 rarity1) public returns (uint256) {
         uint256 rate = rarity0 + rarity1;
         if (rate == 0) {
