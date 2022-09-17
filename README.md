@@ -23,12 +23,12 @@ Contains:
 
 Structure.sol: Data Structure.
 
-Contract Address:
+Contract Address(only test):
 
-MWT_contractAddress: 0x7f2eb97Cd6BceE45c77b06249651CC291e205372
+millionwinnerToken address: 0xb329dba371c49bE54FD46441db19C97F971A1364
 
-NFT_contractAddress: 0xbB4b12827e71ddEaA7D757275bfBa5dCc0D51708
+propsCard address: 0xaF51486c64B8FF0ACf152f64e55C0a0FC6424d03
 
-PropsCard_contractAddress: 0x92C7F55A56046b32322ff90E584576f98E38c9C5
+millionWinnerNFT address: 0xB80A6749a3A410A2B480Ba8c80693fa62A6FbAF0
 
-UpgradeNft_contractAddress: 0xDA9cA154383393430c235EbC4450a9B4F4B295bB
+upgradeNft address:  0x2770a948b050c34562cbe7b349964a10aecE52B9
