@@ -23,12 +23,14 @@ Contains:
 
 Structure.sol: Data Structure.
 
-Contract Address(only test):
+Contract Address:
 
-millionwinnerToken address: 0xb329dba371c49bE54FD46441db19C97F971A1364
+MillionwinnerToken address: Not yet deployed
 
-propsCard address: 0xaF51486c64B8FF0ACf152f64e55C0a0FC6424d03
+PropsCard address: 0xb03283840A7d1BC29d4CCE08efc48C47229cD61D
 
-millionWinnerNFT address: 0xB80A6749a3A410A2B480Ba8c80693fa62A6FbAF0
+MillionWinner Genesis NFT address: 0x443860ad3746ac6f5Db8CDeF60E540e1230c8849
 
-upgradeNft address:  0x2770a948b050c34562cbe7b349964a10aecE52B9
+MillionWinner MetaRover NFT address: 0xc92Ecf9a8eC95900a2efa4DF2Dfb1d0bf348CE2d
+
+upgradeNft address: 0x24a1d321e6630e394cAEa278811e365333D799c9
